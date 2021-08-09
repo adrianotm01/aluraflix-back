@@ -1,6 +1,7 @@
 package br.com.mand.aluraflix.rest;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.mand.aluraflix.dto.VideoDTO;
 import br.com.mand.aluraflix.model.Categoria;
+import br.com.mand.aluraflix.model.Video;
 import br.com.mand.aluraflix.service.CategoriaService;
 
 @RestController
@@ -38,6 +41,13 @@ public class CategoriaController {
 		return ResponseEntity.ok().body(this.categoriaService.getCategoriaById(id));
 	}
 	
+	@GetMapping("/{id}/videos")
+	public ResponseEntity<List<VideoDTO>> getVideosByCategoria(@PathVariable("id") Integer id){
+		List<VideoDTO> videosDTO = converteVideoParaDTO(this.categoriaService.getVideosByCategoria(id));
+		return ResponseEntity.ok(videosDTO);
+	}
+	
+	
 	@PostMapping
 	public ResponseEntity<Categoria> salvarCategoria(@RequestBody @Valid Categoria video){
 		this.categoriaService.salvar(video);
@@ -58,5 +68,14 @@ public class CategoriaController {
 		return ResponseEntity.ok().build();
 		
 	}
+	
+	private List<VideoDTO> converteVideoParaDTO(List<Video> videos) {
+		List<VideoDTO> videosDTO = videos.stream().map(vid -> {
+			VideoDTO dto = new VideoDTO(vid.getId(), vid.getNome(), vid.getDescricao(), vid.getLink(), vid.getCategorias().getId());
+			return dto;
+		}).collect(Collectors.toList());
+		return videosDTO;
+	}
+	
 	
 }

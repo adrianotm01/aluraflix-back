@@ -28,6 +28,11 @@ public class Categoria {
 	@NotBlank
 	private String cor;
 
+	public Categoria(Integer id) {
+		super();
+		this.id = id;
+	}
+
 	
 	
 }
