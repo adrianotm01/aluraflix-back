@@ -39,21 +39,13 @@ public class VideoService {
 		if (existeVideoCadastrado(video)) {
 			throw new IllegalArgumentException();
 		} else {
-			if (categoriaEstaVazia(video)) {
-				video.setCategorias(new Categoria(1));
-			}
 			this.videoRepo.save(video);
 		}
 	}
 
 	public List<Video> getVideosByCategoria(Integer id) {
 		return this.videoRepo.findByCategoriasId(id);
-	}
-
-	private boolean categoriaEstaVazia(Video video) {
-		return video.getCategorias() == null || video.getCategorias().getId() == 0;
-	}
-	
+	}	
 	
 	public boolean existeVideoCadastrado(Video video) {
 		return video.getId() == null ? this.videoRepo.existsByLink(video.getLink()) : this.videoRepo.existsByLinkAndId(video.getLink(),video.getId());

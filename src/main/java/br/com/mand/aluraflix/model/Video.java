@@ -36,7 +36,7 @@ public class Video {
 
 	@ManyToOne
 	@JoinColumn(name = "categoriaId")
-	private Categoria categorias;
+	private Categoria categorias = new Categoria(1);
 
 	public Video(Integer id, String nome, String descricao, String link) {
 		super();

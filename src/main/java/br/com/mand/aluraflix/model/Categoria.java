@@ -22,10 +22,10 @@ public class Categoria {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
-	@NotBlank
+	@NotBlank(message = "O campo é obrigatório")
 	private String titulo;
 	
-	@NotBlank
+	@NotBlank(message = "O campo é obrigatório")
 	private String cor;
 
 	public Categoria(Integer id) {
