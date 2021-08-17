@@ -2,13 +2,11 @@ package br.com.mand.aluraflix.service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.IntStream;
 
-import javax.validation.Valid;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import br.com.mand.aluraflix.dto.VideoDTO;
 import br.com.mand.aluraflix.model.Categoria;
 import br.com.mand.aluraflix.model.Video;
 import br.com.mand.aluraflix.repository.CategoriaRepository;
@@ -26,8 +24,8 @@ public class CategoriaService {
 		this.videoService = videoService;
 	}
 
-	public List<Categoria> getCategoriasAtivos() {
-		return this.categoriaRepository.findAll();
+	public Page<Categoria> getCategoriasAtivos(Pageable page) {
+		return this.categoriaRepository.findAll(page);
 	}
 
 	public Categoria getCategoriaById(Integer id) {

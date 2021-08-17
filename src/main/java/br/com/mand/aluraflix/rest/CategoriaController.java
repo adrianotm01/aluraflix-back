@@ -5,6 +5,8 @@ import java.util.stream.Collectors;
 
 import javax.validation.Valid;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,8 +34,8 @@ public class CategoriaController {
 	}
 
 	@GetMapping
-	public ResponseEntity<List<Categoria>> getCategoriasAtivos(){
-		return ResponseEntity.ok().body(this.categoriaService.getCategoriasAtivos());
+	public ResponseEntity<Page<Categoria>> getCategoriasAtivos(Pageable page){
+		return ResponseEntity.ok().body(this.categoriaService.getCategoriasAtivos(page));
 	}
 	
 	@GetMapping("/{id}")
